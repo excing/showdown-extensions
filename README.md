@@ -39,10 +39,17 @@ you will need:
  7. [MathJax](https://github.com/mathjax/MathJax)
  
 recommend cdn:
- 1. [showdown, raphael, underscore, js-sequence-diagrams](https://cdn.jsdelivr.net/combine/npm/showdown@1.5.0,npm/raphael@2.2.7,npm/underscore@1.9.1,npm/js-sequence-diagrams@1000000.0.6)
- 2. [prismjs](https://cdn.jsdelivr.net/combine/npm/prismjs@9000.0.1,npm/prismjs@9000.0.1/components/prism-java.min.js,npm/prismjs@9000.0.1/components/prism-javascript.min.js,npm/prismjs@9000.0.1/components/prism-go.min.js,npm/prismjs@9000.0.1/components/prism-powershell.min.js,npm/prismjs@9000.0.1/components/prism-python.min.js,npm/prismjs@9000.0.1/components/prism-sql.min.js):
- 3. [flowchart](https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.11.3/flowchart.min.js)
- 4. [MathJax(default)](https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML&latest)
+ 1. [jsdelivr](https://www.jsdelivr.com/)
+ 2. [cdnjs](https://cdnjs.com/):
+
+recommend version:
+ - showdown: 1.5.0
+ - prismjs: 9000.0.1 (from jsdelivr cdn)
+ - raphael: 2.2.7
+ - underscore: 1.9.1
+ - js-sequence-diagrams: 1000000.0.6 (from jsdelivr cdn, this version can use the `raphael` library)
+ - flowchart.js: 1.11.3
+ - MathJax: 2.7.5
 
 ## extension list:
 
