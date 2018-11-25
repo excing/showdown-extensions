@@ -24,6 +24,26 @@ var converter = new showdown.Converter({extensions: ['exension-name_1', 'exensio
 console.log(html);
 ```
 
+## [showdoan-full-extensions.js](https://github.com/excing/showdown-extensions/blob/master/showdoan-full-extensions.js)
+
+It contains all extensions, and rendering the subsequent operation has been completed.
+
+you will need:
+
+ 1. [showdown](https://github.com/showdownjs/showdown)
+ 2. [prismjs](https://github.com/PrismJS/prism)
+ 3. [raphael](https://github.com/DmitryBaranovskiy/raphael)
+ 4. [underscore](https://github.com/jashkenas/underscore)
+ 5. [js-sequence-diagrams](https://github.com/bramp/js-sequence-diagrams)
+ 6. [flowchart.js](https://github.com/adrai/flowchart.js)
+ 7. [MathJax](https://github.com/mathjax/MathJax)
+ 
+recommend cdn:
+ 1. [showdown, raphael, underscore, js-sequence-diagrams](https://cdn.jsdelivr.net/combine/npm/showdown@1.5.0,npm/raphael@2.2.7,npm/underscore@1.9.1,npm/js-sequence-diagrams@1000000.0.6)
+ 2. [prismjs](https://cdn.jsdelivr.net/combine/npm/prismjs@9000.0.1,npm/prismjs@9000.0.1/components/prism-java.min.js,npm/prismjs@9000.0.1/components/prism-javascript.min.js,npm/prismjs@9000.0.1/components/prism-go.min.js,npm/prismjs@9000.0.1/components/prism-powershell.min.js,npm/prismjs@9000.0.1/components/prism-python.min.js,npm/prismjs@9000.0.1/components/prism-sql.min.js):
+ 3. [flowchart](https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.11.3/flowchart.min.js)
+ 4. [MathJax(default)](https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML&latest)
+
 ## extension list:
 
 ### mathjax ([mathjax-extension.js](https://github.com/excing/showdown-extensions/blob/master/mathjax-extension.js))
