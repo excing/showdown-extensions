@@ -41,7 +41,7 @@
 
       {
         type:    'lang',
-        regex:   '~D([^`\\f\+n\\r]+?)~D',
+        regex:   '~D([^`\\f\\n\\r]+?)~D',
         replace: function (match, leadingSlash, codeblock) {
           // Check if we matched the leading \ and return nothing changed if so
           if (leadingSlash === '\\') {

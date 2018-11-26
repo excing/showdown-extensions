@@ -24,6 +24,8 @@ var converter = new showdown.Converter({extensions: ['exension-name_1', 'exensio
 console.log(html);
 ```
 
+[TOC]
+
 ## [showdoan-full-extensions.js](https://github.com/excing/showdown-extensions/blob/master/showdoan-full-extensions.js)
 
 It contains all extensions, and rendering the subsequent operation has been completed.
@@ -131,3 +133,39 @@ cond(no)->para
 para(path1, bottom)->sub1(right)->op1
 para(path2, top)->op1
 ```
+
+### video
+
+Support for the syntax of video display.
+
+#### Example:
+
+![](https://github.com/excing/showdown-extensions/blob/master/example/video_example.png)
+
+#### Markdown syntax:
+
+Simple:
+
+```
+![](http://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_640_3MG.mp4)
+```
+
+Whole:
+
+```
+![alt text](url =wxh "title")
+```
+
+You can also use units:
+
+```
+=100x80     simple, assumes units are in px
+=100x*      sets the height to "auto"
+=80%x5em   width of 80% and height of 5em
+```
+
+#### Support video format
+
+- video/webm
+- video/mp4
+- video/ogg

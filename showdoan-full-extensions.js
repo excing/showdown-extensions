@@ -26,7 +26,7 @@
 function markdownToHtml(container, md, mathJaxCDN='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML&latest') {
 
   // markdown to transform Html
-  var converter = new showdown.Converter({disableForced4SpacesIndentedSublists: 'true', tasklists: 'true', tables: 'true', extensions: ['mathjax', 'diagrams']}),
+  var converter = new showdown.Converter({disableForced4SpacesIndentedSublists: 'true', tasklists: 'true', tables: 'true', extensions: ['mathjax', 'diagrams', 'video']}),
       html      = converter.makeHtml(md);
 
   container.innerHTML = html;
@@ -116,7 +116,11 @@ function markdownToHtml(container, md, mathJaxCDN='https://cdnjs.cloudflare.com/
 
   var latexCodeBlocks = [];
 
-  // LaTeX: $$
+  /**
+   * 支持数学公式的编辑，语法参照 LaTeX。
+   * 
+   * Support editing of mathematical formulas, syntax reference LaTeX.
+   */
   showdown.extension('mathjax', function () {
     return [
       {
@@ -134,7 +138,7 @@ function markdownToHtml(container, md, mathJaxCDN='https://cdnjs.cloudflare.com/
 
       {
         type:    'lang',
-        regex:   '~D([^`\\f\+n\\r]+?)~D',
+        regex:   '~D([^`\\f\\n\\r]+?)~D',
         replace: function (match, leadingSlash, codeblock) {
           // Check if we matched the leading \ and return nothing changed if so
           if (leadingSlash === '\\') {
@@ -165,7 +169,11 @@ function markdownToHtml(container, md, mathJaxCDN='https://cdnjs.cloudflare.com/
   var diagramSeqBlocks = [];
   var diagramFlowBlocks = [];
 
-  // LaTeX: $$
+  /**
+   * 支持时序图和流程图的编辑，语法参见：js-sequence-diagrams 和 flowchart。
+   * 
+   * Support for the editing of sequence diagrams and flowcharts. See the syntax: js-sequence-diagrams and flowchart.
+   */
   showdown.extension('diagrams', function () {
     return [
       {
@@ -214,4 +222,34 @@ function markdownToHtml(container, md, mathJaxCDN='https://cdnjs.cloudflare.com/
     ];
     
   });
+
+  /**
+   * 支持 ![](https://video.mp4) 语法的视频显示。
+   * 
+   * Support for the syntax of video display, syntax: ![](https://video.mp4)
+   */
+  showdown.extension('video', function () {
+    return [
+
+      {
+        type:    'output',
+        regex:   '<p><img src="(.+(mp4|ogg|webm).*?)"(.+?)\\/>',
+        replace: function (match, url, format, other) {
+          // Check if we matched the leading \ and return nothing changed if so
+          if (url === ('.' + format)) {
+            return match;
+          } else {
+            // src="https://image.png" alt="image alt text" title="image title" width="100" height="auto"
+            // var regex = /([a-z]+)="(.*?)"/g;
+
+            // return `<video src="${url}" ${other} controls>I am sorry; your browser does not support HTML5 video in WebM with VP8/VP9 or MP4 with H.264.</video>`;
+            return `<video ${other} controls><source src="${url}" type="video/${format}">I am sorry; your browser does not support HTML5 video in WebM with VP8/VP9 or MP4 with H.264.</video>`;
+          }
+        }
+      },
+
+    ];
+    
+  });
+
 }));
