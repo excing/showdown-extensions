@@ -1,3 +1,5 @@
+> ### Demo: [index.html](https://github.com/excing/showdown-extensions/blob/master/index.html)
+
 # showdown-extensions
 An extension in showdown documents using markdown syntax
 

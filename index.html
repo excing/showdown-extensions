@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>mathjax extension sample</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@9000.0.1/themes/prism.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="content"></div>
+<textarea id="markdownText" hidden>
+
+### 多媒体
+
+mp4 视频测试
+
+```
+![](http://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_640_3MG.mp4)
+```
+
+视频支持格式：[Supported media formats](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats)
+
+![视频测试示例](http://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_640_3MG.mp4)
+
+图片测试
+
+![On November 17, just an hour before sunrise, this bright and colorful meteor flashed through clear predawn skies](https://apod.nasa.gov/apod/image/1811/leonidSV_1300.jpg =90%x* "图片测试")
+
+```
+![](https://apod.nasa.gov/apod/image/1811/leonidSV_1300.jpg)
+```
+
+Please use `$` and `$$` to edit, The square area formula is: $S=a^2$.
+
+### 绘制流程图 Flowchart
+
+```flow
+st=>start: Start:>http://www.google.com[blank]
+e=>end:>http://www.google.com
+op1=>operation: My Operation
+sub1=>subroutine: My Subroutine
+cond=>condition: Yes
+or No?:>http://www.google.com
+io=>inputoutput: catch something...
+para=>parallel: parallel tasks
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->para
+para(path1, bottom)->sub1(right)->op1
+para(path2, top)->op1
+```
+
+----
+
+### 绘制序列图 Sequence Diagram
+
+```seq
+Title: Here is a title
+A->B: Normal line
+B-->C: Dashed line
+C-->C: Point to self
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+```
+
+```
+Title: Here is a title
+A->B: Normal line
+B-->C: Dashed line
+C-->C: Point to self
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+```
+
+数学公式
+
+The square area formula is: $S=a^2$.
+
+$$
+\begin{equation*}
+    \left.\begin{aligned}
+    B’&=-\partial\times E,\\
+    E’&=\partial\times B - 4\pi j,
+    \end{aligned}
+    \right\}
+    \qquad \text{Maxwell’s equations}
+\end{equation*}
+$$
+
+$$
+\begin{align}
+    a^{2}\\
+    \intertext{文字}
+    b^{2}
+\end{align}
+$$
+
+不支持 `\intertext{文字}` 文本截断公式，支持 $e^{i\pi}=1$ 样式，以及 $f(x,y_1,z) = 3y^2z \left( 3+\frac{7x+5}{1+y_1^2} \right)$
+
+$$\begin{alignat*}{2}
+    x& = y_1-y_2+y_3-y_5+y_8-\dots
+    &\quad& \\
+    & = y’\circ y^* && \\
+    & = y(0) y’ && 
+\end{alignat*}
+$$
+
+代码：
+
+```
+$$\begin{equation}\begin{split} a&=b+c-d\\
+&\quad +e-f\\
+& =i 
+\end{split}\end{equation}
+$$
+```
+
+数学公式
+
+$$
+\begin{equation}\begin{split} a&=b+c-d\\
+&\quad +e-f\\
+&=g+h\\
+& =i 
+\end{split}\end{equation}
+$$
+
+</textarea>
+<script src="https://cdn.jsdelivr.net/combine/npm/prismjs@9000.0.1,npm/prismjs@9000.0.1/components/prism-java.min.js,npm/prismjs@9000.0.1/components/prism-javascript.min.js,npm/prismjs@9000.0.1/components/prism-go.min.js,npm/prismjs@9000.0.1/components/prism-powershell.min.js,npm/prismjs@9000.0.1/components/prism-python.min.js,npm/prismjs@9000.0.1/components/prism-sql.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/showdown@1.5.0,npm/raphael@2.2.7,npm/underscore@1.9.1,npm/js-sequence-diagrams@1000000.0.6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.11.3/flowchart.min.js"></script>
+<script src="./showdoan-full-extensions.js"></script>
+
+<script>
+var markdownTextArea = document.getElementById('markdownText');
+var contentDiv = document.getElementById('content');
+markdownToHtml(contentDiv, markdownTextArea.textContent);
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+</body>
+</html>
