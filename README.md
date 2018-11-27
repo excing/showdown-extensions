@@ -136,7 +136,7 @@ para(path1, bottom)->sub1(right)->op1
 para(path2, top)->op1
 ```
 
-### video
+### video ([video-extension.js](https://github.com/excing/showdown-extensions/blob/master/video-extension.js))
 
 Support for the syntax of video display.
 
@@ -171,3 +171,10 @@ You can also use units:
 - video/webm
 - video/mp4
 - video/ogg
+
+### catalog ([catalog-extension.js](https://github.com/excing/showdown-extensions/blob/master/catalog-extension.js))
+ 
+Support <h1> to <h6> catalog display.
+
+Direct introduction.
+
