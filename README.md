@@ -174,7 +174,7 @@ You can also use units:
 
 ### catalog ([catalog-extension.js](https://github.com/excing/showdown-extensions/blob/master/catalog-extension.js))
  
-Support <h1> to <h6> catalog display.
+Support `<h1>` to `<h6>` catalog display.
 
 Direct introduction.
 
