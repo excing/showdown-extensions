@@ -176,5 +176,23 @@ You can also use units:
  
 Support `<h1>` to `<h6>` catalog display.
 
-Direct introduction.
+#### Markdown syntax:
 
+A separate row:
+
+```
+[TOC]
+```
+
+Outpuh html:
+
+```
+<div class="cat" id="toc_catalog">
+  <ul>
+    ...
+    <li>
+    <ul>
+    ...
+  </ul>
+<div>
+```

@@ -18,6 +18,7 @@
 }(function (showdown) {
   'use strict';
 
+  var needCat = false;
   var catalogues = [];
 
   /**
@@ -29,10 +30,22 @@
     return [
 
       {
+        type:    'lang',
+        regex:   '\\n(\\[TOC\\])\\n',
+        replace: function (match) {
+          needCat = true;
+
+          return '[[[TOC]]]]]';
+        }
+      },
+
+      {
         type:    'output',
         regex:   '<h\\d id="(.+?)">(.*?)<\\/h(\\d)>',
         replace: function (match, id, title, level) {
-          catalogues.push({'id': id, 'title': title, 'level': level});
+          if (needCat) {
+            catalogues.push({'id': id, 'title': title, 'level': level});
+          }
 
           return match;
         }
@@ -41,7 +54,9 @@
       {
         type: 'output',
         filter: function (text, globals_converter, options) {
-          var catDiv = '<div class="cat">';
+          if (catalogues.length <= 0) return text;
+
+          var catDiv = '<div class="cat" id="toc_catalog">';
           var lastLevel = 0;
           var levelCount = 0;
 
@@ -50,15 +65,17 @@
 
             if (cat.level < lastLevel) {
               var count = lastLevel - cat.level;
-              if (levelCount < count) {
-                count = levelCount;
+              if (levelCount <= count) {
+                count = levelCount - 1;
               }
               for (var l = 0; l < count; l++) {
                 catDiv += ('</ul>');
               }
-              catDiv += ('<ul>');
-              levelCount ++;
               levelCount -= count;
+              if (1 < levelCount) {
+                catDiv += ('<ul>');
+                levelCount ++;
+              }
             } else if (lastLevel < cat.level) {
               catDiv += ('<ul>');
               levelCount ++;
@@ -70,7 +87,7 @@
 
           catDiv += '</ul></div>';
 
-          return catDiv + text;
+          return text.replace(/\[\[\[TOC\]\]\]\]\]/g, catDiv);
         }
       },
     ];
