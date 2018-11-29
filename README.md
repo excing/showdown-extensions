@@ -17,7 +17,7 @@ Showdown allows additional functionality to be loaded via extensions
 
 see [showdown extensions wiki](https://github.com/showdownjs/showdown/wiki/extensions)
 
-## Usage:
+## Usage
 
 ```java
 var markdown = `# showdown-extensions`;
@@ -55,17 +55,13 @@ recommend version:
  - flowchart.js: 1.11.3
  - MathJax: 2.7.5
 
-## extension list:
+## extension list
 
 ### mathjax ([mathjax-extension.js](https://github.com/excing/showdown-extensions/blob/master/mathjax-extension.js))
 
 Support for writing math formulas using `LaTex` syntax, then you can use the [Mathjax](https://github.com/mathjax/MathJax) plugin to display math formulas in web pages.
 
-#### Example:
-
-![](https://github.com/excing/showdown-extensions/blob/master/example/math_formulas_example.png)
-
-#### Markdown syntax:
+#### Markdown syntax
 
 Please use `$` and `$$` to edit.
 
@@ -88,21 +84,15 @@ $$
 $$
 ```
 
+#### Example
+
+![](example/math_formulas_example.png)
+
 ### diagrams ([diagrams-extension.js](https://github.com/excing/showdown-extensions/blob/master/diagrams-extension.js))
 
 Support for text format sequence diagrams and flowcharts, then you can use the [js-sequence-diagrams](https://github.com/bramp/js-sequence-diagrams) and [flowchart.js](https://github.com/adrai/flowchart.js) to display them.
 
-#### Example:
-
-sequence diagrams
-
-![](https://github.com/excing/showdown-extensions/blob/master/example/flowcharts_example.png)
-
-flowchart
-
-![](https://github.com/excing/showdown-extensions/blob/master/example/sequence_diagrams_example.png)
-
-#### Markdown syntax:
+#### Markdown syntax
 
 use ` ```seq` and ` ```flow` to edit.
 
@@ -136,15 +126,21 @@ para(path1, bottom)->sub1(right)->op1
 para(path2, top)->op1
 ```
 
+#### Example
+
+sequence diagrams
+
+![](example/flowcharts_example.png)
+
+flowchart
+
+![](example/sequence_diagrams_example.png)
+
 ### video ([video-extension.js](https://github.com/excing/showdown-extensions/blob/master/video-extension.js))
 
 Support for the syntax of video display.
 
-#### Example:
-
-![](https://github.com/excing/showdown-extensions/blob/master/example/video_example.png)
-
-#### Markdown syntax:
+#### Markdown syntax
 
 Simple:
 
@@ -166,6 +162,10 @@ You can also use units:
 =80%x5em   width of 80% and height of 5em
 ```
 
+#### Example
+
+![](example/video_example.png)
+
 #### Support video format
 
 - video/webm
@@ -176,17 +176,13 @@ You can also use units:
  
 Support `<h1>` to `<h6>` catalog display.
 
-#### Markdown syntax:
+#### Markdown syntax
 
-A separate row:
+A separate row: `[TOC]`
 
-```
-[TOC]
-```
+Output html:
 
-Outpuh html:
-
-```
+```html
 <div class="cat" id="toc_catalog">
   <ul>
     ...
@@ -196,3 +192,52 @@ Outpuh html:
   </ul>
 <div>
 ```
+
+#### Example
+
+![](example/catalog_example.png)
+
+### audio ([audio-extension.js](https://github.com/excing/showdown-extensions/blob/master/audio-extension.js))
+
+Support for the syntax of audio display.
+
+#### Markdown syntax
+
+```
+![](http://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3)
+```
+
+#### Example
+
+![](example/audio_example.png)
+
+#### Support video format
+
+- audio/mpeg
+- audio/wav
+- audio/ogg
+
+### anchor
+
+Support for anchor buttons for `<h1>` to `<h6>` titles, the anchor style is GitHub anchor style.
+
+#### Markdown syntax
+
+Adapted directly `<h1>` to `<h6>` tag
+
+output html:
+
+```html
+<h1 id="thisistitle11">
+  <a class="anchor" aria-hidden="true" href="#thisistitle11">
+    <svg class="octicon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+      <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    </svg>
+  </a>
+  ...
+</h1>
+```
+
+#### Example
+
+![](example/anchor_example.png)

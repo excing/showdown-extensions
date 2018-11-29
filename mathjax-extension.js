@@ -23,7 +23,11 @@
 
   var latexCodeBlocks = [];
 
-  // LaTeX: $$
+  /**
+   * 支持数学公式的编辑，语法参照 LaTeX。
+   * 
+   * Support editing of mathematical formulas, syntax reference LaTeX.
+   */
   showdown.extension('mathjax', function () {
     return [
       {
@@ -66,6 +70,6 @@
       },
 
     ];
-    
   });
+
 }));

@@ -23,12 +23,12 @@
    * 
    * Support for the syntax of video display, syntax: ![](https://video.mp4)
    */
-  showdown.extension('video', function () {
+  showdown.extension('audio', function () {
     return [
 
       {
         type:    'output',
-        regex:   '<p><img src="(.+(mp4|ogg|webm).*?)"(.+?)\\/>',
+        regex:   '<p><img src="(.+(mp3|ogg|wav).*?)"(.+?)\\/>',
         replace: function (match, url, format, other) {
           // Check if we matched the leading \ and return nothing changed if so
           if (url === ('.' + format)) {
@@ -37,12 +37,15 @@
             // src="https://image.png" alt="image alt text" title="image title" width="100" height="auto"
             // var regex = /([a-z]+)="(.*?)"/g;
 
+            if ('mp3' === format) format = 'mpeg';
+
             // return `<video src="${url}" ${other} controls>I am sorry; your browser does not support HTML5 video in WebM with VP8/VP9 or MP4 with H.264.</video>`;
-            return `<video ${other} controls><source src="${url}" type="video/${format}">I am sorry, Your browser does not support the <code>video</code> element.</video>`;
+            return `<audio ${other} controls><source src="${url}" type="audio/${format}">I am sorry, Your browser does not support the <code>audio</code> element.</audio>`;
           }
         }
       },
     ];
+    
   });
 
 }));

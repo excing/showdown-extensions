@@ -24,6 +24,11 @@
   var diagramSeqBlocks = [];
   var diagramFlowBlocks = [];
 
+  /**
+   * 支持时序图和流程图的编辑，语法参见：js-sequence-diagrams 和 flowchart。
+   * 
+   * Support for the editing of sequence diagrams and flowcharts. See the syntax: js-sequence-diagrams and flowchart.
+   */
   showdown.extension('diagrams', function () {
     return [
       {
@@ -69,7 +74,7 @@
         }
       },
 
-    ];
-    
+    ];    
   });
+
 }));

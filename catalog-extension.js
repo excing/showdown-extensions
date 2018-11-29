@@ -44,6 +44,11 @@
         regex:   '<h\\d id="(.+?)">(.*?)<\\/h(\\d)>',
         replace: function (match, id, title, level) {
           if (needCat) {
+            var title_ahref_reg = /(.*?)<a .*>(.*?)<\/a>(.*)/g;
+            var title_ahref_reg_match = title_ahref_reg.exec(title);
+            if (null !== title_ahref_reg_match) {
+              title = title_ahref_reg_match[1] + ' ' + title_ahref_reg_match[2] + ' ' + title_ahref_reg_match[3];
+            }
             catalogues.push({'id': id, 'title': title, 'level': level});
           }
 
@@ -72,10 +77,6 @@
                 catDiv += ('</ul>');
               }
               levelCount -= count;
-              if (1 < levelCount) {
-                catDiv += ('<ul>');
-                levelCount ++;
-              }
             } else if (lastLevel < cat.level) {
               catDiv += ('<ul>');
               levelCount ++;

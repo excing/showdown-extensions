@@ -72,7 +72,6 @@
       },
 
     ];
-    
   });
 
   var diagramSeqBlocks = [];
@@ -128,8 +127,7 @@
         }
       },
 
-    ];
-    
+    ];    
   });
 
   /**
@@ -152,11 +150,39 @@
             // var regex = /([a-z]+)="(.*?)"/g;
 
             // return `<video src="${url}" ${other} controls>I am sorry; your browser does not support HTML5 video in WebM with VP8/VP9 or MP4 with H.264.</video>`;
-            return `<video ${other} controls><source src="${url}" type="video/${format}">I am sorry; your browser does not support HTML5 video in WebM with VP8/VP9 or MP4 with H.264.</video>`;
+            return `<video ${other} controls><source src="${url}" type="video/${format}">I am sorry, Your browser does not support the <code>video</code> element.</video>`;
           }
         }
       },
+    ];
+  });
 
+  /**
+   * 支持 ![](https://video.mp4) 语法的视频显示。
+   * 
+   * Support for the syntax of video display, syntax: ![](https://video.mp4)
+   */
+  showdown.extension('audio', function () {
+    return [
+
+      {
+        type:    'output',
+        regex:   '<p><img src="(.+(mp3|ogg|wav).*?)"(.+?)\\/>',
+        replace: function (match, url, format, other) {
+          // Check if we matched the leading \ and return nothing changed if so
+          if (url === ('.' + format)) {
+            return match;
+          } else {
+            // src="https://image.png" alt="image alt text" title="image title" width="100" height="auto"
+            // var regex = /([a-z]+)="(.*?)"/g;
+
+            if ('mp3' === format) format = 'mpeg';
+
+            // return `<video src="${url}" ${other} controls>I am sorry; your browser does not support HTML5 video in WebM with VP8/VP9 or MP4 with H.264.</video>`;
+            return `<audio ${other} controls><source src="${url}" type="audio/${format}">I am sorry, Your browser does not support the <code>audio</code> element.</audio>`;
+          }
+        }
+      },
     ];
     
   });
@@ -187,6 +213,11 @@
         regex:   '<h\\d id="(.+?)">(.*?)<\\/h(\\d)>',
         replace: function (match, id, title, level) {
           if (needCat) {
+            var title_ahref_reg = /(.*?)<a .*>(.*?)<\/a>(.*)/g;
+            var title_ahref_reg_match = title_ahref_reg.exec(title);
+            if (null !== title_ahref_reg_match) {
+              title = title_ahref_reg_match[1] + ' ' + title_ahref_reg_match[2] + ' ' + title_ahref_reg_match[3];
+            }
             catalogues.push({'id': id, 'title': title, 'level': level});
           }
 
@@ -215,10 +246,6 @@
                 catDiv += ('</ul>');
               }
               levelCount -= count;
-              if (1 < levelCount) {
-                catDiv += ('<ul>');
-                levelCount ++;
-              }
             } else if (lastLevel < cat.level) {
               catDiv += ('<ul>');
               levelCount ++;
@@ -237,5 +264,28 @@
     
   });
 
+  /**
+   * 支持 <h1> 到 <h6> 标题的锚点按钮
+   * 
+   * Support for anchor buttons for <h1> to <h6> titles
+   */
+  showdown.extension('anchor', function () {
+    return [
+
+      {
+        type:    'output',
+        regex:   '<h\\d id="(.+?)">(.*?)<\\/h(\\d)>',
+        replace: function (match, id, title, level) {
+
+          // github anchor style
+          var octicon_html = `<a class="anchor" aria-hidden="true" href="#${id}"><svg class="octicon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>`;
+
+          return `<h${level} id="${id}">${octicon_html}${title}</h${level}>`;
+        }
+      },
+
+    ];
+    
+  });
 
 }));
