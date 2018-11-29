@@ -1,7 +1,7 @@
 # showdown-extensions
 An extension in showdown documents using markdown syntax
 
-[Sample](http://excing.github.io/sample/extensions_sample.html)
+[Sample](http://excing.github.io/sample/showdown_extensions_sample.html)
 
 - what is showdown
 
