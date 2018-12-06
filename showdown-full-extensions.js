@@ -68,11 +68,19 @@
           } else {
             index = Number(index);
             var code = latexCodeBlocks[index].text;
-            if (index + 1 === latexCodeBlocks.length) {
-              latexCodeBlocks = [];
-            }
             return code.replace(/~D/g, '$$');
           }
+        }
+      },
+
+      // 清除缓存
+      // clear cache
+      {
+        type: 'output',
+        filter: function (text, globals_converter, options) {
+          latexCodeBlocks = [];
+
+          return text;
         }
       },
 
@@ -126,18 +134,24 @@
             index = Number(index);
             if ('X' == match.charAt(1)) {
               var seq = diagramSeqBlocks[index].codeblock;
-              if (index + 1 === diagramSeqBlocks.length) {
-                diagramSeqBlocks = [];
-              }
               return '<div style="white-space: pre" class="diagram seq", id="diagram_seq_' + index + '">' + seq + '</div>';
             } else {
               var flow = diagramFlowBlocks[index].codeblock;
-              if (index + 1 === diagramFlowBlocks.length) {
-                diagramFlowBlocks = [];
-              }
               return '<div style="white-space: pre" class="diagram flow", id="diagram_flow_' + index + '">' + flow + '</div>';
             }
           }
+        }
+      },
+
+      // 清除缓存
+      // clear cache
+      {
+        type: 'output',
+        filter: function (text, globals_converter, options) {
+          diagramSeqBlocks = [];
+          diagramFlowBlocks = [];
+
+          return text;
         }
       },
 

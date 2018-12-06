@@ -88,6 +88,8 @@
 
           catDiv += '</ul></div>';
 
+          // 清除缓存
+          // clear cache
           needCat = false;
           catalogues = [];
 

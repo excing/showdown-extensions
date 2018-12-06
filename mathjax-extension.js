@@ -66,11 +66,19 @@
           } else {
             index = Number(index);
             var code = latexCodeBlocks[index].text;
-            if (index + 1 === latexCodeBlocks.length) {
-              latexCodeBlocks = [];
-            }
             return code.replace(/~D/g, '$$');
           }
+        }
+      },
+
+      // 清除缓存
+      // clear cache
+      {
+        type: 'output',
+        filter: function (text, globals_converter, options) {
+          latexCodeBlocks = [];
+
+          return text;
         }
       },
 
