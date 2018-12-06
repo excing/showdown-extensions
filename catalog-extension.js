@@ -88,6 +88,9 @@
 
           catDiv += '</ul></div>';
 
+          needCat = false;
+          catalogues = [];
+
           return text.replace(/\[\[\[TOC\]\]\]\]\]/g, catDiv);
         }
       },

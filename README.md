@@ -1,9 +1,10 @@
 # showdown-extensions
 An extension in showdown documents using markdown syntax
 
-[Sample](http://excing.github.io/sample/showdown_extensions_sample.html)
+- [Sample](http://excing.github.io/sample/showdown_extensions_sample.html)
+- [Live](https://excq.me/sample/markdown_live.html)
 
-- what is showdown
+### what is showdown
 
 Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber. Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -11,7 +12,7 @@ Check a live Demo here [http://demo.showdownjs.com/](http://demo.showdownjs.com/
 
 Click [showdown github](https://github.com/showdownjs/showdown)
 
-- what is showdown extensions
+### what is showdown extensions
 
 Showdown allows additional functionality to be loaded via extensions
 
@@ -47,13 +48,13 @@ recommend cdn:
  2. [cdnjs](https://cdnjs.com/):
 
 recommend version:
- - showdown: 1.5.0
- - prismjs: 9000.0.1 (from jsdelivr cdn)
- - raphael: 2.2.7
- - underscore: 1.9.1
- - js-sequence-diagrams: 1000000.0.6 (from jsdelivr cdn, this version can use the `raphael` library)
- - flowchart.js: 1.11.3
- - MathJax: 2.7.5
+ - showdown: `1.5.0`
+ - prismjs: `9000.0.1` (from jsdelivr cdn)
+ - raphael: `2.2.7`
+ - underscore: `1.9.1`
+ - js-sequence-diagrams: `1000000.0.6` (from jsdelivr cdn, this version can use the `raphael` library)
+ - flowchart.js: `1.11.3`
+ - MathJax: `2.7.5`
 
 ## extension list
 

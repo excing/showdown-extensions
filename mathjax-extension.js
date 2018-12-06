@@ -64,7 +64,12 @@
           if (leadingSlash === '\\') {
             return match;
           } else {
-            return latexCodeBlocks[index].text.replace(/~D/g, '$$');
+            index = Number(index);
+            var code = latexCodeBlocks[index].text;
+            if (index + 1 === latexCodeBlocks.length) {
+              latexCodeBlocks = [];
+            }
+            return code.replace(/~D/g, '$$');
           }
         }
       },

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Markdown Live</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@9000.0.1/themes/prism.min.css" rel="stylesheet">
+    <style>
+@media (max-width: 1280px){
+#recommendation {
+    display: none;
+}
+}
+
+/*锚点样式*/
+h1:hover .octicon, h2:hover .octicon, h3:hover .octicon, h4:hover .octicon, h5:hover .octicon, h6:hover .octicon {
+    visibility: visible;
+}
+.anchor {
+    float: left;
+    line-height: 1;
+    margin-left: -20px;
+    padding-right: 4px;
+}
+.anchor:focus .octicon {
+    visibility: visible;
+}
+.octicon {
+    display: inline-block;
+    fill: currentColor;
+    color: #1b1f23;
+    vertical-align: middle;
+    visibility: hidden;
+}
+/* 目录样式 */
+.cat ul {
+    list-style-type: none;
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+
+.cat ul ul {
+    list-style-type: none;
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+.cat li, li {
+    padding-top: 0em;
+    padding-bottom: 0em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+    </style>
+</head>
+<body style="max-width:100%">
+<div style="padding: 1em 10px;">
+Markdown live - <span id="recommendation">Based on showdown, support flowcharts, sequence diagrams, mathematical formulas, audio and video.</span>
+<a href="https://excq.me/view.html?id=ed2758f6-bb70-4f06-afb3-7225cf42f4bf">showdown 扩展使用文档</a>
+<div style="
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 3.7em;
+    bottom: 1.7em
+    ">
+    <textarea id="markdownInput" onkeyup="Preview.Update()" style="
+        border-radius: 0;
+        background-color: #fff;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #ccc;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        color: rgba(0,0,0,0.75);
+        height: 100%;
+        width: 45%;
+        display: block;
+        padding: 0.5rem;
+        margin-right: 10px;"></textarea>
+
+    <div id="markdownPreview" style="
+        border: 1px solid #eee;
+        overflow-y: scroll;
+        height: 100%;
+        width: 55%;
+        padding: 10px 30px;
+        display: block;
+        margin-left: 10px;"></div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/combine/npm/prismjs@9000.0.1,npm/prismjs@9000.0.1/components/prism-java.min.js,npm/prismjs@9000.0.1/components/prism-javascript.min.js,npm/prismjs@9000.0.1/components/prism-go.min.js,npm/prismjs@9000.0.1/components/prism-powershell.min.js,npm/prismjs@9000.0.1/components/prism-python.min.js,npm/prismjs@9000.0.1/components/prism-sql.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/showdown@1.5.0,npm/raphael@2.2.7,npm/underscore@1.9.1,npm/js-sequence-diagrams@1000000.0.6"></script>
+<script src="https://cdn.jsdelivr.net/gh/adrai/flowchart.js@v1.11.3/release/flowchart.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML&latest"></script>
+
+<!-- <script src="./catalog-extension.js"></script>
+<script src="./diagrams-extension.js"></script>
+<script src="./mathjax-extension.js"></script>
+<script src="./video-extension.js"></script>
+<script src="./audio-extension.js"></script>
+<script src="./anchor-extension.js"></script>
+ --> 
+<script src="./showdown-full-extensions.js"></script>
+
+<script>
+var converter = new showdown.Converter({
+    'disableForced4SpacesIndentedSublists': 'true', 
+    'tasklists': 'true', 
+    'tables': 'true', 
+    'extensions': ['mathjax', 'diagrams', 'video', 'audio', 'catalog', 'anchor']
+});
+
+var diagramOptions = {
+    'theme': 'simple',
+    stroke: "#000",
+    'line-width': 2,
+    "font-size": 16,
+    "font-family": "Andale Mono, monospace",
+    "font-stretch": "normal",
+}; 
+
+var Preview = {
+  delay: 150,        // delay after keystroke before updating
+
+  preview: null,     // filled in by Init below
+
+  timeout: null,     // store setTimout id
+  mjRunning: false,  // true when MathJax is processing
+  mjPending: false,  // true when a typeset has been queued
+  oldText: null,     // used to check if an update is needed
+
+  Init: function () {
+    this.preview = document.getElementById("markdownPreview");
+  },
+
+  CreatePreview: function () {
+    Preview.timeout = null;
+    if (this.mjPending) return;
+    var text = document.getElementById("markdownInput").value;
+    if (text === this.oldText) return;
+    if (this.mjRunning) {
+      this.mjPending = true;
+      MathJax.Hub.Queue(["CreatePreview", this]);
+    } else {
+      this.oldText = text;
+      var html = converter.makeHtml(text);
+      this.preview.innerHTML = html;
+      this.mjRunning = true;
+      MathJax.Hub.Queue(
+    ["Typeset", MathJax.Hub, this.preview],
+    ["PreviewDone",this]
+      );
+    }
+  },
+
+  PreviewDone: function () {
+    this.mjRunning = this.mjPending = false;
+
+    var flows = document.getElementsByClassName("flow");
+    for (var i = 0; i < flows.length; i++) {
+        var flow = flows[i];
+        try {
+            var chart = flowchart.parse(flow.innerText);
+            flow.innerText = '';
+            chart.drawSVG(flow.id, diagramOptions);
+        } catch (exception_var_1) {
+            console.log('chart.drawSVG err: ' + exception_var_1);
+        }
+    }
+
+    var seqes = document.getElementsByClassName("seq");
+    for (var i = 0; i < seqes.length; i++) {
+        var seq = seqes[i];
+        try {
+            var diagram = Diagram.parse(seq.innerText);
+            seq.innerText = '';
+            diagram.drawSVG(seq.id, diagramOptions);
+        } catch (exception_var_2) {
+            console.log('Diagram.drawSVG err: ' + exception_var_2);
+        }
+    }
+  },
+
+  Update: function () {
+    if (this.timeout) {clearTimeout(this.timeout)}
+    this.timeout = setTimeout(this.callback, this.delay);
+  },
+
+}
+
+Preview.callback = MathJax.Callback(["CreatePreview", Preview]);
+Preview.callback.autoReset = true;  // make sure it can run more than once
+
+Preview.Init();
+Preview.Update();
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+</body>
+</html>
+
