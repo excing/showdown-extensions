@@ -2,7 +2,7 @@
 An extension in showdown documents using markdown syntax
 
 - [Sample](http://excing.github.io/sample/showdown_extensions_sample.html)
-- [Live](https://excq.me/sample/markdown_live.html)
+- [Live](https://excing.github.io/sample/markdown_live.html)
 
 ### what is showdown
 
